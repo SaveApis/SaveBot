@@ -20,10 +20,11 @@ jobs:
         with:
           dotnet-version: 8.0.x
       - name: Restore tools
-        run: dotnet tool restore
+        run: |
+          dotnet tool restore
       - name: Read version
         id: version
-        run: echo "version=$(versionize inspect)" >> $GITHUB_OUTPUT
+        run: echo "version=$(dotnet versionize inspect)" >> $GITHUB_OUTPUT
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx

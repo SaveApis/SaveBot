@@ -15,9 +15,9 @@ RUN --mount=type=secret,id=nuget_user,required=true \
     --mount=type=secret,id=hangfire_ace_url,required=true \
     --mount=type=secret,id=hangfire_ace_user,required=true \
     --mount=type=secret,id=hangfire_ace_token,required=true \
-    dotnet nuget add source -u $(cat /run/secrets/hangfire_pro_user) -p $(cat /run/secrets/hangfire_pro_token) $(cat /run/secrets/hangfire_pro_url) --store-password-in-clear-text && \
-    dotnet nuget add source -u $(cat /run/secrets/hangfire_ace_user) -p $(cat /run/secrets/hangfire_ace_token) $(cat /run/secrets/hangfire_ace_url) --store-password-in-clear-text && \
-    dotnet nuget add source -u $(cat /run/secrets/nuget_user) -p $(cat /run/secrets/nuget_token) https://nuget.pkg.github.com/SaveApis/index.json --store-password-in-clear-text
+    dotnet nuget add source $(cat /run/secrets/hangfire_pro_url) -n hangfire-pro -u $(cat /run/secrets/hangfire_pro_user) -p $(cat /run/secrets/hangfire_pro_token) --store-password-in-clear-text && \
+    dotnet nuget add source $(cat /run/secrets/hangfire_ace_url) -n hangfire-ace -u $(cat /run/secrets/hangfire_ace_user) -p $(cat /run/secrets/hangfire_ace_token) --store-password-in-clear-text && \
+    dotnet nuget add source https://nuget.pkg.github.com/SaveApis/index.json -n github -u $(cat /run/secrets/nuget_user) -p $(cat /run/secrets/nuget_token)  --store-password-in-clear-text
 
 COPY ["src/Bot/Bot.csproj", "src/Bot/"]
 RUN dotnet restore "src/Bot/Bot.csproj"
