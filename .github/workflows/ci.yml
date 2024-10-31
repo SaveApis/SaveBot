@@ -25,7 +25,6 @@ jobs:
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_CSHARP: true
   build-csharp:
-    needs: lint
     name: Build C#
     runs-on: self-hosted
     permissions:
@@ -59,7 +58,7 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore --nologo -p:WarnAsError=true
   build-docker:
-    needs: lint
+    needs: build-csharp
     name: Build Docker
     runs-on: self-hosted
     permissions:
